@@ -43,7 +43,7 @@ void determine_velocity(Airplane *p_pombo, double xt, double yt, double zt, floa
          vu = (alt1 - alt0) / fabs(alt1 - alt0) * vertspeed;
    else
    {
-      vu = (alt1 - alt0) * 0.05;      
+      vu = (alt1 - alt0) * 0.02;      
    }   
       
 

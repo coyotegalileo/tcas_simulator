@@ -210,7 +210,6 @@ int mux( Airplane * pombo, Airplane * pombo_tcas)
       if(returning_str[i] == pombo->tcas_status[i])
       {
          isReturning=true;
-         contador++;
       }
       else
       {
@@ -250,15 +249,16 @@ int mux( Airplane * pombo, Airplane * pombo_tcas)
 
    }      
 
+   if(isReturning)
+	contador++;
+
    if (isClear || isAdvisory)
    {
-      if(contador > 0 && contador < 10)
+      if(contador > 0 && contador < 60)
          contador++;
       else
          contador = 0;
    }
-
- 
 
      // Return
    if(contador > 0 )
@@ -278,7 +278,18 @@ int mux( Airplane * pombo, Airplane * pombo_tcas)
       // Velocidade Direcional do Auto Pilot e vertical do TCAS
       vE_due = vE_apilot;
       vN_due = vN_apilot;
-      vU_due = signal * 10 / _MSTOFTMIN;
+
+	  if(contador < 5){
+	      	vU_due = -signal*1200/_MSTOFTMIN;
+	      }else if(contador < 10){
+		vU_due = -signal*(1000/_MSTOFTMIN);
+	      } else if(contador < 30){
+		vU_due = -signal*500/_MSTOFTMIN;
+	      } else{
+		vU_due = 0;
+	      }
+
+	std::cout << contador << " : vUDUE ---------------- "<<vU_due << std::endl; 
 
       // Conversão para WGS + Atribuição
       enu_to_wgs(vE_due, vN_due, vU_due, &pombo->vx, &pombo->vy, &pombo->vz, lat, lon);    

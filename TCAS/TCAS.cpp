@@ -497,7 +497,7 @@ void TCAS_sim(std::vector< Airplane > airspace,std::vector< Airplane > &warning_
 		{
 			bearing2 = acos((dx_enu*vx_enu+dy_enu*vy_enu)/(normD*normV)) * 180.0 / PI;
 			int side = (vx_enu*(y_i-y)-vy_enu*(x_i-x));
-			if(side < 0){
+			if(side > 0){
 				bearing2 = -bearing2;
 			}
 		}
