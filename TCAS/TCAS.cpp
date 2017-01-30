@@ -124,11 +124,11 @@ void to_display::newSocks(int* sockback, struct sockaddr_in* sockadd_back, int p
       // Caso address especifico
       if(strcmp(specific_addr,"Nope") !=0 )
       {         
-         serv_addr.sin_addr.s_addr = htonl(INADDR_BROADCAST);
+         serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
       }
       else
       {
-         serv_addr.sin_addr.s_addr = htonl(INADDR_BROADCAST);
+         serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
       }
    }
    else
