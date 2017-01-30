@@ -30,12 +30,14 @@ int main( int argc, char *argv[] )
    double t_start, t_end;
    double t_broad_start, t_broad_end;
    double vx, vy, vz;
+   double dvx, dvy, dvz;
    double vx1, vy1, vz1;
    double vn, ve, vu;
    double vn1, ve1, vu1;
    float lat, lon, alt;
    double x0, y0, z0;
    double x1, y1, z1;
+   double DV2, V1, newDV2;
    
    bool first = true;
 
@@ -115,38 +117,38 @@ int main( int argc, char *argv[] )
       vx = pombo.vx;
       vy = pombo.vy;
       vz = pombo.vz;
+
+      
+      // Latitude e Altitude
+      wgs_to_geo(pombo.x, pombo.y, pombo.z, &lat, &lon, &alt);
+
+      // Conversao para ENU         
+      wgs_to_enu(pombo.vx, pombo.vy, pombo.vz, &ve, &vn, &vu, lat, lon);
+   
+      std::cout << vu1 << "<-vu1 " << vu << "<-vu" << std::endl;
       
       if(first)
          first = false;
       else
       {
-         // Check Limit
-         if(fabs(vx-vx1)/dt > ACCEL_LIMIT)
-         {
-            vx = vx1 + ACCEL_LIMIT * dt * (vx-vx1) / fabs(vx-vx1);
-            printf("\nX ACCEL\n");
-         }
-         if(fabs(vy-vy1)/dt > ACCEL_LIMIT)
-         {
-            vy = vy1 + ACCEL_LIMIT * dt * (vy-vy1) / fabs(vy-vy1);
-            printf("\nY ACCEL\n");
-         }
-         if(fabs(vz-vz1)/dt > ACCEL_LIMIT)
-         {
-            vz = vz1 + ACCEL_LIMIT * dt * (vz-vz1) / fabs(vz-vz1);
-            printf("\nZ ACCEL\n");
-         }
-      }
+         if(vu-vu1 > ACCEL_LIMIT)
+            vu = vu1 + ACCEL_LIMIT * dt;
+         if(vu-vu1 < -ACCEL_LIMIT)
+            vu = vu1 - ACCEL_LIMIT * dt;
 
-      // Old Equals New
-      vx1 = vx;
-      vy1 = vy;
-      vz1 = vz; 
-      ve1 = ve;
-      vn1 = vn;
+      }
+      
+      // Guarda Anterior
       vu1 = vu;
 
-      printf("V = %.1f\n", sqrt(vx*vx+vy*vy+vz*vz));
+      // Conversão para WGS + Atribuição
+      enu_to_wgs(ve, vn, vu, &vx, &vy, &vz, lat, lon);    
+      
+      // Passa para o airplane
+      pombo.vx =  vx;
+      pombo.vy =  vy;
+      pombo.vz =  vz;
+      
 
       //Compute Position
       x1 = x0 + dt * vx;
