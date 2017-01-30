@@ -581,6 +581,11 @@ void TCAS_sim(std::vector< Airplane > airspace,std::vector< Airplane > &warning_
 		}
 	}
 
+	if (display_l.size() == 0)
+	{
+		strncpy(TCAS_status, "CLEAR", sizeof(TCAS_status));
+	}
+
 	strncpy(my_airplane.tcas_status, TCAS_status, sizeof(TCAS_status));
 	warning_area.push_back(my_airplane);
 
