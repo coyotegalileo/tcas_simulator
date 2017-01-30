@@ -482,22 +482,19 @@ void TCAS_sim(std::vector< Airplane > airspace,std::vector< Airplane > &warning_
 		// printf("Other altitude %f ft\n",alt_i*m_to_ft );
 
 		/// bearing 2
-		double x_i_enu, y_i_enu, z_i_enu;
-        	wgs_to_enu( x_i, y_i, z_i, &x_i_enu, &y_i_enu, &z_i_enu, lat_i, lon_i); 
-
-	        int dx = x_i_enu-x_enu;
-		int dy = y_i_enu-y_enu;
-		int normD = sqrt(pow(dx, 2) + pow(dy, 2));
+		double dx_enu, dy_enu, dz_enu;
+        	wgs_to_enu( (x_i-x), (y_i-y), (z_i-z), &dx_enu, &dy_enu, &dz_enu, lat, lon); 
+		int normD = sqrt(pow(dx_enu, 2) + pow(dy_enu, 2));
 
 		double vx_enu, vy_enu, vz_enu;
 		wgs_to_enu(vx, vy, vz,&vx_enu, &vy_enu, &vz_enu,lat, lon);
 		int normV = sqrt(pow(vx_enu, 2) + pow(vy_enu, 2));
 
 
-		std::cout << normV << " <- norm V " << normD << " <- norm D " << vx_enu << " <- vx_enu " << vy_enu << " <- vy enu "<< std::endl; 	
+		std::cout << dx_enu << " <- dx_enu; " << dy_enu << " <- dy_enu " << std::endl; 	
 
-		std::cout << ((dx*vx_enu+dy*vy_enu)/(normD*normV)) << " modulo 1?" << std::endl; 
-		bearing2 = acos((dx*vx_enu+dy*vy_enu)/(normD*normV)) * 180.0 / PI;
+		std::cout << ((dx_enu*vx_enu+dy_enu*vy_enu)/(normD*normV)) << " modulo 1?" << std::endl; 
+		bearing2 = acos((dx_enu*vx_enu+dy_enu*vy_enu)/(normD*normV)) * 180.0 / PI;
       
 		int side = (vx_enu*(y_i_enu-y_enu)-vy_enu*(x_i_enu-x_enu));
 		if(side < 0)
