@@ -485,8 +485,8 @@ void TCAS_sim(std::vector< Airplane > airspace,std::vector< Airplane > &warning_
 		double x_i_enu, y_i_enu, z_i_enu;
         	wgs_to_enu( x_i, y_i, z_i, &x_i_enu, &y_i_enu, &z_i_enu, lat_i, lon_i); 
 
-	   int dx = x_i_enu-x_i;
-		int dy = y_i_enu-y_i;
+	        int dx = x_i_enu-x_enu;
+		int dy = y_i_enu-y_enu;
 		int normD = sqrt(pow(dx, 2) + pow(dy, 2));
 
 		double vx_enu, vy_enu, vz_enu;
@@ -495,6 +495,9 @@ void TCAS_sim(std::vector< Airplane > airspace,std::vector< Airplane > &warning_
 
 		bearing2 = acos((dx*vx_enu+dy*vy_enu)/(normD*normV)) * 180.0 / PI;
       
+		int side = (vx_enu*(y_i_enu-y_enu)-vy_enu*(x_i_enu-x_enu));
+		if(side < 0)
+			bearing2 = -bearing2;
 
 		///
 
