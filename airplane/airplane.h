@@ -3,9 +3,9 @@
 #ifndef AIRPLANE_H
 #define AIRPLANE_H
 
-// #define AIRPLANE_ID 9999 //216412359 // se tiver 0 no inicio é octal 999//
+#define AIRPLANE_ID 9999 //216412359 // se tiver 0 no inicio é octal 999//
 
-#define AIRPLANE_ID 2796771980 // se tiver 0 no inicio é octal 999//
+// #define AIRPLANE_ID 2796771980 // se tiver 0 no inicio é octal 999//
 
 #define ADDRESS_NET "192.168.1.94"//"194.210.157.92"  //"192.168.1.94"
 
@@ -20,6 +20,8 @@
 #include<stdlib.h>
 #include <vector>
 #include <chrono>
+#include <inttypes.h>
+
 
 //Linux
 #include <sys/types.h>
@@ -34,6 +36,7 @@
 uint32_t checksum(unsigned char * message);
 bool validate_checksum(unsigned char* message);
 uint32_t crc32(unsigned char * message);
+uint32_t GetCrc32(unsigned char * message);
 void error(const char *msg);
 
 class Airplane

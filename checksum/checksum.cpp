@@ -4,6 +4,7 @@
 #include <iostream>
 #include <stdint.h>
 #include <stdlib.h> 
+#include <boost/crc.hpp>  // for boost::crc_32_type
 
 
 // Generates random ascii char array
@@ -31,18 +32,24 @@ void uint32ToBuff(unsigned char *out, uint32_t in){
 }
 
 //  Calculates checksum of a message  - returns int
-uint32_t checksum(unsigned char * message)
-{
-    uint32_t crc32= 0;
-    int shift = 0;
-    for (int i = 0; i < 120; ++i){
-        crc32 += (message[i] << shift);
-        shift += 8; // assuming bytes instead of bits
-        if (shift == 32){
-            shift = 0;
-        }
-    }    
-    return crc32;
+// uint32_t checksum(unsigned char * message)
+// {
+//     uint32_t crc32= 0;
+//     int shift = 0;
+//     for (int i = 0; i < 120; ++i){
+//         crc32 += (message[i] << shift);
+//         shift += 8; // assuming bytes instead of bits
+//         if (shift == 32){
+//             shift = 0;
+//         }
+//     }    
+//     return crc32;
+// }
+
+uint32_t GetCrc32(unsigned char * message) {
+    boost::crc_32_type result;
+    result.process_bytes(message, 120);
+    return result.checksum();
 }
 
 // Check whether the checksum is valid
@@ -63,7 +70,9 @@ bool validate_checksum(unsigned char* message)
         last_part[i] = message[120+i];
     }
 
-    uint32_t crc32 = checksum(first_part);
+    // uint32_t crc32 = checksum(first_part);
+    uint32_t crc32 = GetCrc32(first_part);
+
     unsigned char const* crc_chars;
     crc_chars = reinterpret_cast<unsigned char const *>(&crc32);
 

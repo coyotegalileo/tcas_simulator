@@ -76,6 +76,7 @@ void Airplane::sendMsg(int sockfd, struct sockaddr_in* sockadd )
  
    int n;
    char buffer[256];
+   uint32_t crc_m;
 
    /* Structured */
 
@@ -144,8 +145,17 @@ void Airplane::sendMsg(int sockfd, struct sockaddr_in* sockadd )
          data_string[i+112]=p[11][i];
 
    // CHecksum
-   crc = checksum(data_string);
+  
+   // std::cout << data_string << std::endl;
+   crc = GetCrc32(data_string);
+   // printf("checksum boost= %" PRIu32 " - size = %zu\n",crc_boost,sizeof(crc_boost));
+   std::cout << "checksum boost = " << crc << " size " << sizeof(crc) << std::endl;
 
+   // std::cout << data_string << std::endl;
+   // crc_m = checksum(data_string);
+   // // printf("cheksum meu: %" PRIu32 " - size = %zu\n",crc,sizeof(crc));
+   // std::cout << "checksum mine = " << crc_m << " size " << sizeof(crc_m) << std::endl;
+  
    
    io[12].iov_base = &crc;
    io[12].iov_len = sizeof(crc);
@@ -271,7 +281,7 @@ void Airplane::sendMsgList(int sockfd, struct sockaddr_in* sockadd, std::vector<
             data_string[j+112]=p[11][j];
 
 
-      airspace[i].crc = checksum(data_string);
+      airspace[i].crc = GetCrc32(data_string);
       
       
 
