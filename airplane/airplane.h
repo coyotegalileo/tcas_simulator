@@ -62,6 +62,8 @@ class Airplane
         char header [16];
         uint64_t id;
         double x, y, z;
+        double x0, y0, z0;
+        double ve0, vn0, vu0;
         double vx, vy, vz;
         char tcas_status [16];
         uint64_t intr_id;
