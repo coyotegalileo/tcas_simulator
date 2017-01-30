@@ -4,6 +4,8 @@
 
 using namespace std;
 
+double bearing2;
+
 to_display::to_display()
 {
 	d_altitude = 0;
@@ -421,7 +423,7 @@ void TCAS_sim(std::vector< Airplane > airspace,std::vector< Airplane > &warning_
 	double x,y,z,x_i,y_i,z_i;
 	double vx,vy,vz,vx_i,vy_i,vz_i;
 	Airplane my_airplane;
-	double distance,tau_range, d_alt,tau_vertical,bearing,v_speed, bearing2;
+	double distance,tau_range, d_alt,tau_vertical,bearing,v_speed;
 	float lat, lon, alt, lat_i, lon_i, alt_i;
 	int th_tau_TA,th_tau_RA,th_alt_TA,th_alt_RA;
 
@@ -491,11 +493,17 @@ void TCAS_sim(std::vector< Airplane > airspace,std::vector< Airplane > &warning_
 		wgs_to_enu(vx, vy, vz,&vx_enu, &vy_enu, &vz_enu,lat, lon);
 		double normV = sqrt(pow(vx_enu, 2) + pow(vy_enu, 2));
 
-		bearing2 = acos((dx_enu*vx_enu+dy_enu*vy_enu)/(normD*normV)) * 180.0 / PI;
+		if (normD*normV != 0)
+		{
+			bearing2 = acos((dx_enu*vx_enu+dy_enu*vy_enu)/(normD*normV)) * 180.0 / PI;
+			int side = (vx_enu*(y_i-y)-vy_enu*(x_i-x));
+			if(side < 0){
+				bearing2 = -bearing2;
+			}
+		}
+
       
-		int side = (vx_enu*(y_i-y)-vy_enu*(x_i-x));
-		if(side < 0)
-			bearing2 = -bearing2;
+	
 
 		///
 
