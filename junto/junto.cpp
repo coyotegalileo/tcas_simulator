@@ -150,7 +150,11 @@ int mux( Airplane * pombo, Airplane * pombo_tcas)
 
    // Resolving
    bool isResolving;
-   bool isReturning;
+   bool isReturning; 
+   bool isClear;
+   bool isAdvisory;
+   char clear_str[16] = "CLEAR\0";
+   char advisory_str[16] = "ADVISORY\0";  
    char resolving_str[16] = "RESOLVING\0";  
    char returning_str[16] = "RETURNING\0";   
 
@@ -164,7 +168,19 @@ int mux( Airplane * pombo, Airplane * pombo_tcas)
       pombo->resolution[i] = pombo_tcas->resolution[i];
    }
   
-   // Check is resolving
+   // Check is advisory
+   for(int i=0; i<8; i++)
+   {
+      if(advisory_str[i] == pombo->tcas_status[i])
+         isAdvisory=true;
+      else
+      {
+         isAdvisory= false;
+      }
+      
+   }
+
+    // Check is  resolving
    for(int i=0; i<8; i++)
    {
       if(resolving_str[i] == pombo->tcas_status[i])
@@ -176,13 +192,25 @@ int mux( Airplane * pombo, Airplane * pombo_tcas)
       
    }
 
+   // Check is clear
+   for(int i=0; i<3; i++)
+   {
+      if(clear_str[i] == pombo->tcas_status[i])
+         isClear=true;
+      else
+      {
+         isClear = false;
+      }
+      
+   }
+
     // Check is returning
-   for(int i=0; i<8; i++)
+   for(int i=0; i<6; i++)
    {
       if(returning_str[i] == pombo->tcas_status[i])
       {
          isReturning=true;
-         contador = 1;
+         contador++;
       }
       else
       {
@@ -195,6 +223,7 @@ int mux( Airplane * pombo, Airplane * pombo_tcas)
    if(pombo_tcas->resol_value != 0 && isResolving)
    {
       
+      contador = 0;
       //Determina se sobe ou desce
       if(pombo_tcas->resolution[0]=='C')
       {
@@ -221,10 +250,18 @@ int mux( Airplane * pombo, Airplane * pombo_tcas)
 
    }      
 
-   
+   if (isClear || isAdvisory)
+   {
+      if(contador > 0 && contador < 10)
+         contador++;
+      else
+         contador = 0;
+   }
+
+ 
 
      // Return
-   if(isReturning)
+   if(contador > 0 )
    {
  
       // Latitude e Altitude
@@ -241,7 +278,7 @@ int mux( Airplane * pombo, Airplane * pombo_tcas)
       // Velocidade Direcional do Auto Pilot e vertical do TCAS
       vE_due = vE_apilot;
       vN_due = vN_apilot;
-      vU_due = signal * 100 / _MSTOFTMIN;
+      vU_due = signal * 10 / _MSTOFTMIN;
 
       // Conversão para WGS + Atribuição
       enu_to_wgs(vE_due, vN_due, vU_due, &pombo->vx, &pombo->vy, &pombo->vz, lat, lon);    
