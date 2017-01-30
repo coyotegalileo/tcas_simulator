@@ -4,20 +4,23 @@
 
 #define ACCEL_LIMIT 2.4525
 #define FASTFORWARD 1
+#define PORT2PRE 8128
 
 int main( int argc, char *argv[] )
 {
     
-   int port_2apilot, port_mux;
-   if(argc == 3)
+   int port_2apilot, port_mux, port_2pre;
+   if(argc == 4)
    {
       port_mux = atoi(argv[1]);
       port_2apilot = atoi(argv[2]);
+      port_2pre = atoi(argv[3]);
    }
    else
    {
       port_mux = PORT_MUX;
       port_2apilot = PORT2APILOT;
+      port_2pre = PORT2PRE;
    }
 
    // Temporizador
@@ -79,6 +82,12 @@ int main( int argc, char *argv[] )
    int sockAPILOT;
    struct sockaddr_in serv_addr_apilot;      
    pombo.newSocks(&sockAPILOT, &serv_addr_apilot , port_2apilot, true);
+
+   
+   //Socket Send Predisp
+   int sockPRE;
+   struct sockaddr_in serv_addr_pre;      
+   pombo.newSocks(&sockPRE, &serv_addr_pre , port_2pre, true);
 
 
    //Socket Send Broadcast
@@ -182,6 +191,7 @@ int main( int argc, char *argv[] )
    
       //Send Apilot
       pombo.sendMsg(sockAPILOT, &serv_addr_apilot );
+      pombo.sendMsg(sockPRE, &serv_addr_pre );
 
       // Time for Broadcast
       now = std::chrono::system_clock::now();
