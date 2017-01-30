@@ -417,7 +417,7 @@ void decide_resolution(char* resolution, double x0,double y0,double z0,double vx
 // TCAS SIM: reads airplanes from broacast and decides TCAS status
 void TCAS_sim(std::vector< Airplane > airspace,std::vector< Airplane > &warning_area,std::vector< to_display > &display_l)
 {	
-	char TCAS_status[16] = "";
+	char TCAS_status[16];
 	double x,y,z,x_i,y_i,z_i;
 	double vx,vy,vz,vx_i,vy_i,vz_i;
 	Airplane my_airplane;
@@ -428,7 +428,8 @@ void TCAS_sim(std::vector< Airplane > airspace,std::vector< Airplane > &warning_
 	double x_enu, y_enu, z_enu;
 
 	warning_area.clear();
-	display_l.clear();   
+	display_l.clear(); 	
+	strncpy(TCAS_status, "", sizeof(TCAS_status));
 	// std::vector< Airplane > warning_area;
    
 	// My aircraft
@@ -555,7 +556,7 @@ void TCAS_sim(std::vector< Airplane > airspace,std::vector< Airplane > &warning_
 		// my_airplane.resolution = "\0";
 		my_airplane.resol_value = 0;
 		my_airplane.intr_id = 0;
-		if (strcmp(my_airplane.tcas_status,"RESOLVING")==0)
+		if (strcmp(my_airplane.tcas_status,"RESOLVING")==0) // last state
 		{
 			strncpy(TCAS_status, "RETURNING", sizeof(TCAS_status));
 		}
