@@ -374,7 +374,7 @@ void Airplane::newSocks(int* sockback, struct sockaddr_in* sockadd_back, int por
       }
       else
       {
-         serv_addr.sin_addr.s_addr = htonl(INADDR_BROADCAST);
+         serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
       }
    }
    else

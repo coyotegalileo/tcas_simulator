@@ -73,7 +73,7 @@ int main( int argc, char *argv[] )
       wgs_to_enu(pombo.vx, pombo.vy, pombo.vz, &vE, &vN, &vU, lat, lon);
       groundspeed = std::sqrt(vE*vE + vN*vN)*1.944;
       // Print na Consola
-      std::system("clear");
+      //std::system("clear");
       printf("\t FLIGHT DATA \n\n\n");
       printf("\t GS : %.1f [kn]\t VS : %.1f [feet/min]\n", groundspeed, vU * 196.850393701);
       printf("\n\t Position : LAT [%f] \t LON [%f] \t ALT [%.1f] \n", lat/_TORAD, lon/_TORAD, alt);
