@@ -27,7 +27,7 @@
 #define GANHO_VUP 1
 
 
-
+int contador = 0;
 
 int autopilot( Airplane * pombo, double x, double y, double z, float groundspeed, float vertspeed )
 {
@@ -150,7 +150,9 @@ int mux( Airplane * pombo, Airplane * pombo_tcas)
 
    // Resolving
    bool isResolving;
-   char resolving_str[16] = "RESOLVING\0";   
+   bool isReturning;
+   char resolving_str[16] = "RESOLVING\0";  
+   char returning_str[16] = "RETURNING\0";   
 
       
    // Variaveis que vêm do TCAS sempre
@@ -173,6 +175,21 @@ int mux( Airplane * pombo, Airplane * pombo_tcas)
       }
       
    }
+
+    // Check is returning
+   for(int i=0; i<8; i++)
+   {
+      if(returning_str[i] == pombo->tcas_status[i])
+      {
+         isReturning=true;
+         contador = 1;
+      }
+      else
+      {
+         isReturning= false;
+      }      
+   }
+
 
    // Caso em RA colocar resolução
    if(pombo_tcas->resol_value != 0 && isResolving)
@@ -202,7 +219,36 @@ int mux( Airplane * pombo, Airplane * pombo_tcas)
       // Conversão para WGS + Atribuição
       enu_to_wgs(vE_due, vN_due, vU_due, &pombo->vx, &pombo->vy, &pombo->vz, lat, lon);    
 
-   }                
+   }      
+
+   
+
+     // Return
+   if(isReturning)
+   {
+ 
+      // Latitude e Altitude
+      wgs_to_geo(pombo->x, pombo->y, pombo->z, &lat, &lon, &alt);
+
+      // Conversao para ENU         
+      wgs_to_enu(pombo->vx, pombo->vy, pombo->vz, &vE_apilot, &vN_apilot, &vU_apilot, lat, lon);
+
+      if(vU_apilot < 0)
+         signal = -1;
+      else
+         signal = 1;
+
+      // Velocidade Direcional do Auto Pilot e vertical do TCAS
+      vE_due = vE_apilot;
+      vN_due = vN_apilot;
+      vU_due = signal * 100 / _MSTOFTMIN;
+
+      // Conversão para WGS + Atribuição
+      enu_to_wgs(vE_due, vN_due, vU_due, &pombo->vx, &pombo->vy, &pombo->vz, lat, lon);    
+
+   }
+
+          
 
    return 0;
 }

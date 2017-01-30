@@ -23,7 +23,7 @@
 // Constants
 #define th_stab 0.5 // m/s aprox 100 ft /min
 #define th_d_alt 0.5 // m
-#define res_v_speed 1750 // vertical speed for resolution (ft/min)
+#define res_v_speed 1500 // vertical speed for resolution (ft/min)
 
 // Classes
 class to_display
