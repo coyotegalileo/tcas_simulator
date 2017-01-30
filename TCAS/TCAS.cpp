@@ -491,9 +491,6 @@ void TCAS_sim(std::vector< Airplane > airspace,std::vector< Airplane > &warning_
 		wgs_to_enu(vx, vy, vz,&vx_enu, &vy_enu, &vz_enu,lat, lon);
 		double normV = sqrt(pow(vx_enu, 2) + pow(vy_enu, 2));
 
-		std::cout << dx_enu << " <- dx_enu; " << dy_enu << " <- dy_enu " << std::endl; 	
-		std::cout << ((dx_enu*vx_enu+dy_enu*vy_enu)/(normD*normV)) << " modulo 1?" << std::endl;
- 
 		bearing2 = acos((dx_enu*vx_enu+dy_enu*vy_enu)/(normD*normV)) * 180.0 / PI;
       
 		int side = (vx_enu*(y_i-y)-vy_enu*(x_i-x));
@@ -512,7 +509,6 @@ void TCAS_sim(std::vector< Airplane > airspace,std::vector< Airplane > &warning_
 			tau_vertical = 0;
 		}
 		printf("Tau vertical: %f\n",tau_vertical);
-		// printf("%f º\n", bearing);
 
 		if ((abs(d_alt*m_to_ft)<th_alt_RA) && (tau_vertical<th_tau_RA) && (tau_range<th_tau_RA))
 		{
