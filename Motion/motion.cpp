@@ -329,10 +329,12 @@ int predisp( Airplane pombo , int sockDISP, struct sockaddr_in* serv_addr_disp)
 
    // Print na Consola
    //std::system("clear");
+   printf("-----------------------------------------------------------\n");
    printf("\t FLIGHT DATA \n\n\n");
    printf("\t GS : %.1f [kn]\t VS : %.1f [feet/min]\n", groundspeed, vU * 196.850393701);
    printf("\n\t Position : LAT [%f] \t LON [%f] \t ALT [%.1f] \n", lat/_TORAD, lon/_TORAD, alt);
    printf("\n\n \t TCAS: STATUS(%s) \t RESOLUTION(%s) \t VALUE(%.1f) ID-%lu IDINT-%lu \n\n", pombo.tcas_status, pombo.resolution,pombo.resol_value,pombo.id ,pombo.intr_id  );
+   printf("-----------------------------------------------------------\n");
 
    //CLIMB or DESCENT
    if(pombo.resolution[0] == 'C')

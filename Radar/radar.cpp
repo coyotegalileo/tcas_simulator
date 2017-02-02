@@ -65,6 +65,7 @@ int main( int argc, char *argv[] )
                   
       // Recebe dados do broadcast
       pombo.receiveData(sockBROADCAST);
+      printf("Recebido: ID->%lu\n", pombo.id);
 
       // Verifica se avião está na lista e reinicia contador se existe
       index_lista = -1;
@@ -134,16 +135,14 @@ int verificaID(Airplane pombo, std::vector< Airplane > airspace, int size)
 
 int verificaDesaparece(std::vector< Airplane > & airspace, int *size)
 {
-   std::cout << "Size" << *size << std::endl;
-   
+  
    for(int index=0;index<*size;index++)
    {
       airspace[index].not_seen --;
       if(airspace[index].not_seen <= 0 )
       {
          airspace.erase(airspace.begin()+index);                  
-         *size=  *size-1;
-         std::cout << "DONE \n" << *size;
+         *size=  *size-1;        
       }
    }
    

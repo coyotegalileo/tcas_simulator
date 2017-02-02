@@ -459,12 +459,12 @@ void Airplane::receiveData(int sockBROAD)
        printf("datagram too large for buffer: truncated\n");
    } else {
 
-      printf("\nHeader = %s \n",header);
-      printf("ID = %lu", id);
-      printf("x = %f y = %f z = %f\n", x,y,z);
-      printf("vx = %f vy = %f vz = %f\n",vx,vy,vz);
-      printf("STATUS = %s Intruder = %lu Resolution = %s Value=%f \n",tcas_status, intr_id, resolution,resol_value);
-      printf("Checksum = %u \n ", crc);
+      //printf("\nHeader = %s \n",header);
+      //printf("ID = %lu", id);
+      //printf("x = %f y = %f z = %f\n", x,y,z);
+      //printf("vx = %f vy = %f vz = %f\n",vx,vy,vz);
+      //printf("STATUS = %s Intruder = %lu Resolution = %s Value=%f \n",tcas_status, intr_id, resolution,resol_value);
+      //printf("Checksum = %u \n ", crc);
 
       // Interpretação da mensagem como bytes
       unsigned char const* p_pos[13];
