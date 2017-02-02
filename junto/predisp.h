@@ -4,7 +4,6 @@
 #include "../airplane/airplane.h"
 #include "../converts/converts.h"
 
-//#define SIM_PORT 8128   //The port on which to send data
-#define DISP_PORT 8998  //The port on which to receive data 
+#define DISP_PORT 8998  //The port on which to send to display 
 
-#endif // _MUX_H
+#endif //
