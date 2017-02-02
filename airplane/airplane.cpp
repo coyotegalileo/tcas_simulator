@@ -31,6 +31,7 @@ Airplane::Airplane()
    intr_id = 0;
    resolution[0] = '\0';
    resol_value = 0;
+   not_seen = 7;
 
 }
 
@@ -62,6 +63,7 @@ Airplane::Airplane(double x0, double y0, double z0,double vx0,double vy0, double
    intr_id = 0;
    resolution[0] = '\0';
    resol_value = 0;  
+   not_seen = 7;
 }
 
 // Destructor
