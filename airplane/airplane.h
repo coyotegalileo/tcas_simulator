@@ -3,9 +3,9 @@
 #ifndef AIRPLANE_H
 #define AIRPLANE_H
 
-#define AIRPLANE_ID 9299 //216412359 // se tiver 0 no inicio é octal 999//
+//#define AIRPLANE_ID 9299 //216412359 
 
-//#define AIRPLANE_ID 2796771980 // se tiver 0 no inicio é octal 999//
+#define AIRPLANE_ID 2796771980 
 
 #define ADDRESS_NET "192.168.1.94"//"194.210.157.92"  //"192.168.1.94"
 
@@ -70,6 +70,9 @@ class Airplane
         char resolution [16];
         double resol_value;
         uint32_t crc;
+
+        // Contador para sair da lista
+        int not_seen;
 
         // Variaveis para auto pilot
         bool change_target;
