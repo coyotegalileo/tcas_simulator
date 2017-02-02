@@ -1,1 +1,0 @@
-./apilot & ./mux &  ./sim
