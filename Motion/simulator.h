@@ -1,9 +1,6 @@
 #ifndef _SIM_H
 #define _SIM_H
 
-#include "../airplane/airplane.h"
-#include "../converts/converts.h"
-
 #define PORT2BROAD 10505   // The port for broadcast
 #define PORT2PRE 8128      // The port for display
 

@@ -1,8 +1,8 @@
 #ifndef _RADAR_H
 #define _RADAR_H
 
-#include "../converts/converts.h"
-#include "../airplane/airplane.h"
+#include "../Converts/converts.h"
+#include "../Airplane/airplane.h"
 
 // Ficheiro com waypoints
 #define PATH_FILE "flight.path"

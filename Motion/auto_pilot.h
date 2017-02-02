@@ -1,8 +1,8 @@
 #ifndef _AUTO_PILOT_H
 #define _AUTO_PILOT_H
 
-#include "../converts/converts.h"
-#include "../airplane/airplane.h"
+#include "../Converts/converts.h"
+#include "../Airplane/airplane.h"
 
 // Ficheiro com waypoints
 #define PATH_FILE "flight.path"

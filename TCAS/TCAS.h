@@ -1,8 +1,8 @@
 #ifndef _TCAS_H
 #define _TCAS_H
 
-#include "../converts/converts.h"
-#include "../airplane/airplane.h"
+#include "../Converts/converts.h"
+#include "../Airplane/airplane.h"
 #include <cmath>
 #include <string.h>
 #include <stdio.h>
