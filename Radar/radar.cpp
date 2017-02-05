@@ -4,6 +4,7 @@
 #define TCAS_RATE 0.99
 
 int verificaID(Airplane pombo, std::vector< Airplane > airspace, int size);
+int verificaDesaparece(std::vector< Airplane > & airspace, int *size);
 
 int main( int argc, char *argv[] )
 {
@@ -55,10 +56,6 @@ int main( int argc, char *argv[] )
    //Socket Receive BROAD
    int sockBROADCAST;
    struct sockaddr_in serv_addr_broad;
-   //pombo.newSocks(&sockBROADCAST, &serv_addr_broad, PORT_BROADCAST, false);
-   //pombo.newSocks(&sockBROADCAST, &serv_addr_broad, PORT_BROADCAST, false, "192.168.43.250");
-   //pombo.newSocks(&sockBROADCAST, &serv_addr_broad, PORT_BROADCAST, false, "194.210.156.114");
-   //pombo.newSocks(&sockBROADCAST, &serv_addr_broad, PORT_BROADCAST, false, ADDRESS_NET);
    pombo.newSocks(&sockBROADCAST, &serv_addr_broad, PORT_BROADCAST, false, address2broad.c_str());
 
    time_pre = (double) millis_old/1000;     
@@ -68,10 +65,9 @@ int main( int argc, char *argv[] )
                   
       // Recebe dados do broadcast
       pombo.receiveData(sockBROADCAST);
-      
-              
+      printf("Recebido: ID->%lu\n", pombo.id);
 
-      // Verifica se avião está na lista
+      // Verifica se avião está na lista e reinicia contador se existe
       index_lista = -1;
       index_lista = verificaID(pombo, airspace, list_size);
 
@@ -102,6 +98,8 @@ int main( int argc, char *argv[] )
       if(fabs(time_pos-time_pre) > TCAS_RATE)
       {      
          pombo.sendMsgList(sockfd, &serv_addr, airspace, list_size);
+         verificaDesaparece(airspace, &list_size);
+         
          time_pre = time_pos;
       }
       
@@ -114,9 +112,7 @@ int main( int argc, char *argv[] )
    close(sockfd);
    close(sockBROADCAST);
 
-   //Mensagem de despedida
-   printf("\n AIRPLANE FINISHED FLIGHT\n");
-   printf("\n THANK YOU FOR FLYING WITH US!\n\n");
+
 
 }
 
@@ -128,11 +124,29 @@ int verificaID(Airplane pombo, std::vector< Airplane > airspace, int size)
    {
       if(airspace[index].id == pombo.id)
       {
+         airspace[index].not_seen = 7;
          return index;
       }
    }
    
    // Not on List
    return -1;
+}
+
+int verificaDesaparece(std::vector< Airplane > & airspace, int *size)
+{
+  
+   for(int index=0;index<*size;index++)
+   {
+      airspace[index].not_seen --;
+      if(airspace[index].not_seen <= 0 )
+      {
+         airspace.erase(airspace.begin()+index);                  
+         *size=  *size-1;        
+      }
+   }
+   
+   // Not on List
+   return 0;
 }
 
