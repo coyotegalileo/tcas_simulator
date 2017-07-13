@@ -7,13 +7,13 @@ These executables are obtained by compiling, respectively: "auto_pilot.cpp", "TC
 
 To do it in gcc use in the respective file folder:
 
-*g++ -std=c++11 -g -Iinclude ../auto_pilot/auto_pilot.cpp ../airplane/airplane.cpp ../checksum/checksum.cpp ../converts/converts.cpp ../auto_pilot/determine_velocity.cpp  -o autop*
+*g++ -std=c++11 -g -Iinclude ../Auto_pilot/auto_pilot.cpp ../Airplane/airplane.cpp ../Checksum/checksum.cpp ../Converts/converts.cpp ../Auto_pilot/determine_velocity.cpp  -o autop*
 
-*g++ -std=c++11 -g -Iinclude ../simulador/simulator.cpp ../checksum/checksum.cpp ../converts/converts.cpp ../airplane/airplane.cpp -o simulator*
+*g++ -std=c++11 -g -Iinclude ../Motion/motion.cpp ../Checksum/checksum.cpp ../Converts/converts.cpp ../Airplane/airplane.cpp -o simulator*
 
-*g++ -std=c++11 -g -Iinclude ../TCAS/TCAS.cpp ../checksum/checksum.cpp ../airplane/airplane.cpp ../converts/converts.cpp   -o tcas*
+*g++ -std=c++11 -g -Iinclude ../TCAS/TCAS.cpp ../Checksum/checksum.cpp ../Airplane/airplane.cpp ../Converts/converts.cpp   -o tcas*
 
-*g++ -std=c++11 -g -Iinclude ../Radar/radar.cpp ../airplane/airplane.cpp ../converts/converts.cpp ../checksum/checksum.cpp   -o radar*
+*g++ -std=c++11 -g -Iinclude ../Radar/radar.cpp ../Airplane/airplane.cpp ../Converts/converts.cpp ../Checksum/checksum.cpp   -o radar*
 
 
 ## Run
