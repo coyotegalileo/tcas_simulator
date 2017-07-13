@@ -1,1 +1,46 @@
-# aocalhas
+# TCAS SIM
+
+The code is structured into 4 independent applications: the autopilot, the TCAS, the motion simulator and radar.
+
+## Compile
+These executables are obtained by compiling, respectively: "auto_pilot.cpp", "TCAS.cpp", "motion.cpp" and "radar.cpp".
+
+To do it in gcc use in the respective file folder:
+
+*g++ -std=c++11 -g -Iinclude ../auto_pilot/auto_pilot.cpp ../airplane/airplane.cpp ../checksum/checksum.cpp ../converts/converts.cpp ../auto_pilot/determine_velocity.cpp  -o autop*
+
+*g++ -std=c++11 -g -Iinclude ../simulador/simulator.cpp ../checksum/checksum.cpp ../converts/converts.cpp ../airplane/airplane.cpp -o simulator*
+
+*g++ -std=c++11 -g -Iinclude ../TCAS/TCAS.cpp ../checksum/checksum.cpp ../airplane/airplane.cpp ../converts/converts.cpp   -o tcas*
+
+*g++ -std=c++11 -g -Iinclude ../Radar/radar.cpp ../airplane/airplane.cpp ../converts/converts.cpp ../checksum/checksum.cpp   -o radar*
+
+
+## Run
+To run the program in separate terminal windows run each of the executables. (ONLY ON UNIX SYSTEMS)
+Each airplane is composed by all four executables that communicate with each other accodingly.
+
+To run a different airplane the ports should be changed not to interfere with each other. For example:
+
+*./autop 9004 9001* 
+
+*./mux 9003 9004 9005* 
+
+*./radar 9000* 
+
+*./tcas 9000 9005 9006* 
+
+*./simulator 9003 9001*
+
+*./preout 9001 9002*
+
+(Should choose the ports as the example above. Correspondence and order.)
+
+The path choosen can be edited in the file flight.path that is in the autopilot directory.  Each line is a waypoint as follows
+Latitude(deg) Longitude(deg) Altitude(m) Airspeed(knots) VerticalSpeed(ft/min)
+
+
+
+
+**NOTE:**
+This is not quite polished for general use, hence the complicated running steps and not perfect end product.
