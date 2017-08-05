@@ -5,11 +5,11 @@ The code is structured into 4 independent applications: the autopilot, the TCAS,
 ## Compile
 These executables are obtained by compiling, respectively: "auto_pilot.cpp", "TCAS.cpp", "motion.cpp" and "radar.cpp".
 
-To do it in gcc use in the respective file folder:
+To do it in gcc create a folder in the main directory and command:
 
-*g++ -std=c++11 -g -Iinclude ../Auto_pilot/auto_pilot.cpp ../Airplane/airplane.cpp ../Checksum/checksum.cpp ../Converts/converts.cpp ../Auto_pilot/determine_velocity.cpp  -o autop*
+*g++ -std=c++11 -g -Iinclude ../Autopilot/auto_pilot.cpp ../Airplane/airplane.cpp ../Checksum/checksum.cpp ../Converts/converts.cpp ../Autopilot/determine_velocity.cpp  -o autop*
 
-*g++ -std=c++11 -g -Iinclude ../Motion/motion.cpp ../Checksum/checksum.cpp ../Converts/converts.cpp ../Airplane/airplane.cpp -o simulator*
+*g++ -std=c++11 -g -Iinclude ../Motion/motion.cpp ../Checksum/checksum.cpp ../Converts/converts.cpp ../Autopilot/determine_velocity.cpp ../Airplane/airplane.cpp -o simulator*
 
 *g++ -std=c++11 -g -Iinclude ../TCAS/TCAS.cpp ../Checksum/checksum.cpp ../Airplane/airplane.cpp ../Converts/converts.cpp   -o tcas*
 
@@ -18,7 +18,7 @@ To do it in gcc use in the respective file folder:
 
 ## Run
 To run the program in separate terminal windows run each of the executables. (ONLY ON UNIX SYSTEMS)
-Each airplane is composed by all four executables that communicate with each other accodingly.
+Each airplane is composed by all four executables that communicate with each other accordingly.
 
 To run a different airplane the ports should be changed not to interfere with each other. For example:
 

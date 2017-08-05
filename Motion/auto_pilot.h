@@ -4,6 +4,7 @@
 #include "../Converts/converts.h"
 #include "../Airplane/airplane.h"
 
+
 // Ficheiro com waypoints
 #define PATH_FILE "flight.path"
 

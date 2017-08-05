@@ -22,7 +22,7 @@ int contador = 0;
 int autopilot( Airplane * pombo, double x, double y, double z, float groundspeed, float vertspeed )
 {
     // Compute New Velocity
-    determine_velocity(pombo, x, y, z, groundspeed, vertspeed);
+    determine_velocity(&pombo, x, y, z, groundspeed, vertspeed);
 }
 
 // Simulate the airplane motion
